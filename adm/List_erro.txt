@@ -1,0 +1,2 @@
+001 - Erro de conexao com banco com o banco de dados
+002 - Erro ao carregar a VIEW

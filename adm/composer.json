@@ -1,0 +1,17 @@
+{
+    "description": "Projeto ADM ClickBites",
+    "authors": [
+        {
+            "name": "Marcos Valenga",
+            "email": "marcosvalenga360@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Core\\": "core",
+            "App\\": "app",
+            "Adms\\": "app/adms"
+        }
+    },
+    "require": {}
+}
