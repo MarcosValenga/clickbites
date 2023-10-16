@@ -2,6 +2,11 @@
 
 namespace App\adms\Models;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Solicitar novo link para cadastrar nova senha
  *
@@ -24,6 +29,9 @@ class AdmsRecoverPassword
 
     /** @var array $emailData Recebe dados do conteúdo do e-mail */
     private array $emailData;
+
+    /** @var string $fromEmail Recebe o e-mail do remetente */
+    private string $fromEmail = EMAILADM;
 
     private array $dataSave;
 
@@ -56,7 +64,7 @@ class AdmsRecoverPassword
     private function valUser(): void
     {
         $newConfEmail = new \App\adms\Models\helper\AdmsRead();
-        $newConfEmail->fullRead("SELECT id, name, email 
+        $newConfEmail->fullRead("SELECT id, nome, email 
                                     FROM adms_users
                                     WHERE email=:email
                                     LIMIT :limit",
@@ -66,27 +74,28 @@ class AdmsRecoverPassword
         if ($this->resultBd) {
             $this->valConfEmail();
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: E-mail não cadastrado!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: E-mail não cadastrado!</p>";
             $this->result = false;
         }
     }
 
     private function valConfEmail(): void
     {
-            $this->dataSave['recover_password'] = password_hash(date("Y-m-d H:i:s") . $this->resultBd[0]['id'], PASSWORD_DEFAULT);            
-            $this->dataSave['modified'] = date("Y-m-d H:i:s");
+        $this->dataSave['recover_password'] = password_hash(date("Y-m-d H:i:s") . $this->resultBd[0]['id'], PASSWORD_DEFAULT);            
+        $this->dataSave['modified'] = date("Y-m-d H:i:s");
 
-            $upNewConfEmail = new \App\adms\Models\helper\AdmsUpdate();
-            $upNewConfEmail->exeUpdate("adms_users", $this->dataSave, "WHERE id=:id", "id={$this->resultBd[0]['id']}");
+        $upNewConfEmail = new \App\adms\Models\helper\AdmsUpdate();
+        //var_dump($this->resultBd);
+        $upNewConfEmail->exeUpdate("adms_users", $this->dataSave, "WHERE id=:id", "id={$this->resultBd[0]['id']}");
+        if($upNewConfEmail->getResult()){
 
-            if($upNewConfEmail->getResult()){
-                $this->resultBd[0]['recover_password'] = $this->dataSave['recover_password'];
-                $this->sendEmail();
-            }else{
-                $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Link não enviado, tente novamente!</p>";
-                $this->result = false;
-            }
+            $this->resultBd[0]['recover_password'] = $this->dataSave['recover_password'];
+            $this->sendEmail();
+        }else{
 
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Link não enviado, tente novamente!</p>";
+            $this->result = false;
+        }
     }
 
     private function sendEmail(): void
@@ -94,24 +103,24 @@ class AdmsRecoverPassword
         $sendEmail = new \App\adms\Models\helper\AdmsSendEmail();
         $this->emailHTML();
         $this->emailText();
-        $sendEmail->sendEmail($this->emailData, 2);
+        $sendEmail->sendEmail($this->emailData, 1);
         if ($sendEmail->getResult()) {
-            $_SESSION['msg'] = "<p style='color: green;'>Enviado e-mail com instruções para recuperar a senha. Acesse a sua caixa de e-mail para recuperar a senha!</p>";
+            $_SESSION['msg'] = "<p class='alert-success'>Enviado e-mail com instruções para recuperar a senha. Acesse a sua caixa de e-mail para recuperar a senha!</p>";
             $this->result = true;
         } else {
             $this->fromEmail = $sendEmail->getFromEmail();
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: E-mail com as intruções para recuperar a senha não enviado, tente novamente ou entre em contato com o e-mail {$this->fromEmail}!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: E-mail com as intruções para recuperar a senha não enviado, tente novamente ou entre em contato com o e-mail {$this->fromEmail}!</p>";
             $this->result = false;
         }
     }
 
     private function emailHTML(): void
     {
-        $name = explode(" ", $this->resultBd[0]['name']);
-        $this->firstName = $name[0];
+        $nome = explode(" ", $this->resultBd[0]['nome']);
+        $this->firstName = $nome[0];
 
         $this->emailData['toEmail'] = $this->data['email'];
-        $this->emailData['toName'] = $this->resultBd[0]['name'];
+        $this->emailData['toName'] = $this->resultBd[0]['nome'];
         $this->emailData['subject'] = "Recuperar senha";
         $this->url = URLADM . "update-password/index?key=" . $this->resultBd[0]['recover_password'];
 

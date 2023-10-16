@@ -2,6 +2,11 @@
 
 namespace App\adms\Models\helper;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Classe genérica para validar a senha
  *
@@ -37,11 +42,11 @@ class AdmsValPassword
         $this->password = $password;
 
         if (stristr($this->password, "'")) {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Caracter ( ' ) utilizado na senha inválido!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Caracter ( ' ) utilizado na senha inválido!</p>";
             $this->result = false;
         } else {
             if (stristr($this->password, " ")) {
-                $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Proibido utilizar espaço em branco no campo senha!</p>";
+                $_SESSION['msg'] = "<p class='alert-danger'>Erro: Proibido utilizar espaço em branco no campo senha!</p>";
                 $this->result = false;
             } else {
                 $this->valExtensPassword();
@@ -58,7 +63,7 @@ class AdmsValPassword
     private function valExtensPassword(): void
     {
         if (strlen($this->password) < 6) {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: A senha deve ter no mínimo 6 caracteres!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: A senha deve ter no mínimo 6 caracteres!</p>";
             $this->result = false;
         } else {
             $this->valValuePassword();
@@ -75,7 +80,7 @@ class AdmsValPassword
         if(preg_match('/^(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9-@#$%;*]{6,}$/', $this->password)){
             $this->result = true;
         }else{
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: A senha deve ter letras e números!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: A senha deve ter letras e números!</p>";
             $this->result = false;
         }
     }

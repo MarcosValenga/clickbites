@@ -2,6 +2,11 @@
 
 namespace App\adms\Controllers;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Controller da página visualizar usuarios
  * @author Marcos Valenga <marcosvalenga360@gmail.com>
@@ -45,15 +50,19 @@ class ViewUser
                     $this->viewUser();
                     
                 } else {
-                    $_SESSION['msg'] = "<p style='color: #f00;'>Usuário não encontrado!</p>";
+                    $_SESSION['msg'] = "<p class='alert-danger'>Usuário não encontrado!</p>";
                     $urlRedirect = URLADM . "list-users/index";
                     header("Location: $urlRedirect");
                 }
 
+            }else{
+                $_SESSION['msg'] = "<p class='alert-danger'>Tipo de usuário inválido!</p>";
+                $urlRedirect = URLADM . "list-users/index";
+                header("Location: $urlRedirect");
             } 
             
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>ID de usuário inválido!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>ID de usuário inválido!</p>";
             $urlRedirect = URLADM . "list-users/index";
             header("Location: $urlRedirect");
         }

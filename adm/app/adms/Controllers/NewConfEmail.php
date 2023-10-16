@@ -2,6 +2,11 @@
 
 namespace App\adms\Controllers;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Controller da página para receber novo link para confirmar e-mail
  * @author Cesar <cesar@celke.com.br>

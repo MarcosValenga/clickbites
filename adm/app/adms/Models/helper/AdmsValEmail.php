@@ -2,6 +2,11 @@
 
 namespace App\adms\Models\helper;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Classe genérica para validar o e-mail
  *
@@ -39,7 +44,7 @@ class AdmsValEmail
         if(filter_var($this->email, FILTER_VALIDATE_EMAIL)){
             $this->result = true;
         }else{
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: E-mail inválido!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: E-mail inválido!</p>";
             $this->result = false;
         }
     }

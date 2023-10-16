@@ -1,6 +1,12 @@
 <?php
 
 namespace App\adms\Models;
+
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 use App\adms\Models\helper\AdmsConn;
 
 /**
@@ -46,7 +52,7 @@ class AdmsNewUser
      * 
      * @return void
      */
-    public function create(array $data = null, string $table = "adms_users")
+    public function create(array $data = null)
     {
         $this->data = $data;
         $valEmptyField = new \App\adms\Models\helper\AdmsValEmptyField();
@@ -126,42 +132,46 @@ class AdmsNewUser
         //var_dump($createUser);
 
         if ($createUser->getResult()) {
-            $_SESSION['msg'] = "<p style='color: green;'>Usuário cadastrado com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-success'>Usuário cadastrado com sucesso!</p>";
             $this->result = True;
-            //$this->sendEmail();
+            $this->sendEmail();
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário não cadastrado com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Usuário não cadastrado com sucesso!</p>";
             $this->result = false;
         }
     }
     
 
-    /*private function sendEmail(): void
+    /**
+     * Summary of sendEmail
+     * @return void
+     */
+    private function sendEmail(): void
     {
 
         $this->contentEmailHtml();
         $this->contentEmailText();
 
         $sendEmail = new \App\adms\Models\helper\AdmsSendEmail();
-        $sendEmail->sendEmail($this->emailData, 2);
+        $sendEmail->sendEmail($this->emailData, 1);
 
         if ($sendEmail->getResult()) {
-            $_SESSION['msg'] = "<p style='color: green;'>Usuário cadastrado com sucesso. Acesse a sua caixa de e-mail para confimar o e-mail!</p>";
+            $_SESSION['msg'] = "<p class='alert-success'>Usuário cadastrado com sucesso. Acesse a sua caixa de e-mail para confimar o e-mail!</p>";
             $this->result = true;
         } else {
             $this->fromEmail = $sendEmail->getFromEmail();
-            $_SESSION['msg'] = "<p style='color: #f00;'>Usuário cadastrado com sucesso. Houve erro ao enviar o e-mail de confirmação, entre em contado com {$this->fromEmail} para mais informações!</p>";
+            $_SESSION['msg'] = "<p class='alert-info'>Usuário cadastrado com sucesso. Houve erro ao enviar o e-mail de confirmação, entre em contado com {$this->fromEmail} para mais informações!</p>";
             $this->result = true;
         }
     }
 
     private function contentEmailHtml(): void
     {
-        $name = explode(" ", $this->data['name']);
-        $this->firstName = $name[0];
+        $nome = explode(" ", $this->data['nome']);
+        $this->firstName = $nome[0];
 
         $this->emailData['toEmail'] = $this->data['email'];
-        $this->emailData['toName'] = $this->data['name'];
+        $this->emailData['toName'] = $this->data['nome'];
         $this->emailData['subject'] = "Confirma sua conta";
         $this->url = URLADM . "conf-email/index?key=" . $this->data['conf_email'];
 
@@ -179,5 +189,5 @@ class AdmsNewUser
         $this->emailData['contentText'] .= "Para que possamos liberar o seu cadastro em nosso sistema, solicitamos a confirmação do e-mail clicanco no link abaixo: \n\n";
         $this->emailData['contentText'] .=  $this->url . "\n\n";
         $this->emailData['contentText'] .= "Esta mensagem foi enviada a você pela empresa XXX.\nVocê está recebendo porque está cadastrado no banco de dados da empresa XXX. Nenhum e-mail enviado pela empresa XXX tem arquivos anexados ou solicita o preenchimento de senhas e informações cadastrais.\n\n";
-    }*/
+    }
 }

@@ -2,6 +2,11 @@
 
 namespace App\adms\Controllers;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Controller da página erro
  * @author  Marcos Valenga <marcosvalenga360@gmail.com>

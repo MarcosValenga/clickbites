@@ -13,5 +13,7 @@
             "Adms\\": "app/adms"
         }
     },
-    "require": {}
+    "require": {
+        "phpmailer/phpmailer": "^6.8"
+    }
 }

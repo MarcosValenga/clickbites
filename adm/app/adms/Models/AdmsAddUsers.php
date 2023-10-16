@@ -2,6 +2,11 @@
 
 namespace App\adms\Models;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Cadastrar o usuário no banco de dados
  *
@@ -14,6 +19,8 @@ class AdmsAddUsers
 
     /** @var bool $result Recebe true quando executar o processo com sucesso e false quando houver erro */
     private bool $result;
+
+    private array $listRegistryAdd;
 
     /**
      * @return bool Retorna true quando executar o processo com sucesso e false quando houver erro
@@ -36,6 +43,7 @@ class AdmsAddUsers
     public function create(array $data = null)
     {
         $this->data = $data;
+        
 
         $valEmptyField = new \App\adms\Models\helper\AdmsValEmptyField();
         $valEmptyField->valField($this->data);
@@ -62,7 +70,7 @@ class AdmsAddUsers
         $valEmail->validateEmail($this->data['email']);
     
         $valEmailSingle = new \App\adms\Models\helper\AdmsValEmailSingle();
-        $valEmailSingle->validateEmailSingle($this->data['email']);
+        $valEmailSingle->validateEmailSingle($this->data['email'], false);
     
         $valPassword = new \App\adms\Models\helper\AdmsValPassword();
         $valPassword->validatePassword($this->data['password']);
@@ -114,12 +122,23 @@ class AdmsAddUsers
         //var_dump($createUser);
 
         if ($createUser->getResult()) {
-            $_SESSION['msg'] = "<p style='color: green;'>Usuário cadastrado com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-success'>Usuário cadastrado com sucesso!</p>";
             $this->result = True;
             //$this->sendEmail();
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário não cadastrado com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Usuário não cadastrado com sucesso!</p>";
             $this->result = false;
         }
+    }
+
+    public function listSelect(): array
+    {
+        $list = new \App\adms\Models\helper\AdmsRead();
+        $list->fullRead("SELECT id id_sit, nome_sit FROM sists_usuarios ORDER BY nome_sit ASC");
+        $registry['sit'] = $list->getResult();
+
+        $this->listRegistryAdd = ['sit' => $registry['sit']];
+
+        return $this->listRegistryAdd;
     }
 }

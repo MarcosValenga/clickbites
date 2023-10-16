@@ -2,6 +2,11 @@
 
 namespace App\adms\Models\helper;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Classe genêrica para validar o usuário único, somente um cadatrado pode utilizar o usuário
  *
@@ -17,9 +22,6 @@ class AdmsValUserSingle
 
     /** @var int|null $id Recebe o id do usuário que deve ser ignorado quando estiver validando o usuário para edição */
     private int|null $id;
-
-    /** @var array|null $resultBd Recebe os registros do banco de dados */
-    private array|null $resultBd;
 
     /** @var bool $result Recebe true quando executar o processo com sucesso e false quando houver erro */
     private bool $result;
@@ -46,25 +48,82 @@ class AdmsValUserSingle
      * 
      * @return void
      */
-    public function validateUserSingleLogin(string $user, bool|null $edit = null, int|null $id = null): void
+    public function validateUserSingle(string $user, bool $edit = false, ?int $id = null): void
     {
         $this->user = $user;
         $this->edit = $edit;
         $this->id = $id;
-
+    
         $valUserSingle = new \App\adms\Models\helper\AdmsRead();
-        if(($this->edit == true) and (!empty($this->id))){
-            $valUserSingle->fullRead("SELECT id FROM adms_users WHERE user =:user id <>:id LIMIT :limit", "user={$this->email}&id={$this->id}&limit=1");
-        }else{
-            $valUserSingle->fullRead("SELECT id FROM adms_users WHERE user =:user LIMIT :limit", "user={$this->user}&limit=1");
+    
+        // Verificação para a tabela "alunos"
+        $queryAlunosEmail = "SELECT id FROM alunos WHERE email = :email";
+        if ($edit && $this->id !== null) {
+            $queryAlunosEmail .= " AND id <> :id";
         }
-
-        $this->resultBd = $valUserSingle->getResult();
-        if(!$this->resultBd){
-            $this->result = true;
-        }else{
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Este usuários já está cadastrado!</p>";
-            $this->result = false;
+        $queryAlunosEmail .= " LIMIT 1";
+    
+        $valUserSingle->fullRead($queryAlunosEmail, "email={$this->user}" . ($edit && $this->id !== null ? "&id={$this->id}" : ""));
+        $resultAlunosEmail = $valUserSingle->getResult();
+    
+        $queryAlunosUser = "SELECT id FROM alunos WHERE user = :user";
+        if ($edit && $this->id !== null) {
+            $queryAlunosUser .= " AND id <> :id";
+        }
+        $queryAlunosUser .= " LIMIT 1";
+    
+        $valUserSingle->fullRead($queryAlunosUser, "user={$this->user}" . ($edit && $this->id !== null ? "&id={$this->id}" : ""));
+        $resultAlunosUser = $valUserSingle->getResult();
+    
+        // Repita o processo para a tabela "nutricionistas" para as colunas "email" e "user"
+        $queryNutricionistasEmail = "SELECT id FROM nutricionistas WHERE email = :email";
+        if ($edit && $this->id !== null) {
+            $queryNutricionistasEmail .= " AND id <> :id";
+        }
+        $queryNutricionistasEmail .= " LIMIT 1";
+    
+        $valUserSingle->fullRead($queryNutricionistasEmail, "email={$this->user}" . ($edit && $this->id !== null ? "&id={$this->id}" : ""));
+        $resultNutricionistasEmail = $valUserSingle->getResult();
+    
+        $queryNutricionistasUser = "SELECT id FROM nutricionistas WHERE user = :user";
+        if ($edit && $this->id !== null) {
+            $queryNutricionistasUser .= " AND id <> :id";
+        }
+        $queryNutricionistasUser .= " LIMIT 1";
+    
+        $valUserSingle->fullRead($queryNutricionistasUser, "user={$this->user}" . ($edit && $this->id !== null ? "&id={$this->id}" : ""));
+        $resultNutricionistasUser = $valUserSingle->getResult();
+    
+        // Repita o processo para a tabela "adms_users" para as colunas "email" e "user"
+        $queryAdmsUsersEmail = "SELECT id FROM adms_users WHERE email = :email";
+        if ($edit && $this->id !== null) {
+            $queryAdmsUsersEmail .= " AND id <> :id";
+        }
+        $queryAdmsUsersEmail .= " LIMIT 1";
+    
+        $valUserSingle->fullRead($queryAdmsUsersEmail, "email={$this->user}" . ($edit && $this->id !== null ? "&id={$this->id}" : ""));
+        $resultAdmsUsersEmail = $valUserSingle->getResult();
+    
+        $queryAdmsUsersUser = "SELECT id FROM adms_users WHERE user = :user";
+        if ($edit && $this->id !== null) {
+            $queryAdmsUsersUser .= " AND id <> :id";
+        }
+        $queryAdmsUsersUser .= " LIMIT 1";
+    
+        $valUserSingle->fullRead($queryAdmsUsersUser, "user={$this->user}" . ($edit && $this->id !== null ? "&id={$this->id}" : ""));
+        $resultAdmsUsersUser = $valUserSingle->getResult();
+    
+        // Verifique os resultados das consultas e defina $this->result de acordo
+        if (
+            !$resultAlunosEmail && !$resultNutricionistasEmail && !$resultAdmsUsersEmail &&
+            !$resultAlunosUser && !$resultNutricionistasUser && !$resultAdmsUsersUser
+        ) {
+            $this->result = true; // E-mail e usuário são únicos em todas as tabelas e colunas
+        } else {
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Este e-mail ou usuário já está cadastrado!</p>";
+            $this->result = false; // E-mail ou usuário já existe em pelo menos uma das tabelas ou colunas
         }
     }
+    
+    
 }

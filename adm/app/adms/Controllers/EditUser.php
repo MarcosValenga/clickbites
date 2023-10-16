@@ -3,6 +3,11 @@
 namespace App\adms\Controllers;
 use App\adms\Models\AdmsEditUser;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Controller da página editar usuário
  * @author 
@@ -54,6 +59,9 @@ class EditUser
      */
     private function viewEditUser(): void
     {
+        $listSelect = new \App\adms\Models\AdmsEditUser();
+        $this->data['select'] = $listSelect->listSelect();
+
         $loadView = new \Core\ConfigView("adms/Views/users/editUser", $this->data);
         $loadView->loadView();
     }

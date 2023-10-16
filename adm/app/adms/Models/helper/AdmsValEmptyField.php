@@ -2,6 +2,11 @@
 
 namespace App\adms\Models\helper;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Classe genérica para validar se os campos estão preenchidos
  *
@@ -40,7 +45,7 @@ class AdmsValEmptyField
         $this->data = array_map('trim', $this->data);
 
         if(in_array('', $this->data)){
-            $_SESSION['msg'] = "<p style='color: #f00'>Erro: Necessário preencher todos os campos!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Necessário preencher todos os campos!</p>";
             $this->result = false;
         }else{
             $this->result = true;

@@ -1,62 +1,129 @@
 <?php
-echo "<h2>Detalhes do Usuário</h2>";
 
-                
-echo "<a href='" . URLADM . "list-users/index' class='btn-info'>Listar</a><br><br>";
-
-if (!empty($this->data['viewUser'])) {
-    $firstElement = reset($this->data['viewUser']); // Obtém o primeiro elemento do array multidimensional
-
-    if (isset($firstElement['tipo'])) {
-        $tipo = $firstElement['tipo'];
-        $id = $firstElement['id'];
-        echo "<a href='".URLADM."edit-user/index/$id/?tipo=$tipo'>Editar</a><br><br>";
-        echo "<a href='".URLADM."delete-user/index/$id/?tipo=$tipo' onclick='return confirm(\"Tem certeza que deseja excluir este registro?\")'>Apagar</a><br><br>";
-    } else {
-        echo "<p>A chave 'tipo' não está definida no array.</p>";
-    }
+if (!defined('CL1K3B1T35')) {
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
 }
+?>
+
+<!-- Inicio do conteudo do administrativo -->
+<div class="wrapper">
+    <div class="row">
+        <div class="top-list">
+            <span class="title-content">Detalhes do Usuário</span>
+            <div class="top-list-right">
+                <?php
+                echo "<a href='" . URLADM . "list-users/index' class='btn-info'>Listar</a> ";
+
+                if (!empty($this->data['viewUser'])) {
+                    $firstElement = reset($this->data['viewUser']); 
+
+                    if (isset($firstElement['tipo'])) {
+                        $tipo = $firstElement['tipo'];
+                        $id = $firstElement['id'];
+                        echo "<a href='" . URLADM . "edit-user/index/$id/?tipo=$tipo' class='btn-warning'>Editar</a> ";
+                        echo "<a href='" . URLADM . "edit-user-password/index/$id/?tipo=$tipo' class='btn-warning'>Editar Senha</a> ";
+                        echo "<a href='" . URLADM . "edit-user-image/index/$id/?tipo=$tipo' class='btn-warning'>Editar Imagem</a> ";
+                        echo "<a href='" . URLADM . "delete-user/index/$id/?tipo=$tipo' onclick='return confirm(\"Tem certeza que deseja excluir este registro?\")' class='btn-danger'>Apagar</a> ";
+                    }
+                }
+                ?>
+            </div>
+        </div>
+        <div class="content-adm">
+            <?php
+            if (isset($_SESSION['msg'])) {
+                echo $_SESSION['msg'];
+                unset($_SESSION['msg']);
+            }
+            ?>
+        </div>
+        <div class="content-adm">
+            <?php
+            if (!empty($this->data['viewUser'])) {
+                $usuario = $this->data['viewUser'][0];
+                extract($usuario);
+            ?>
+                <div class="view-det-adm">
+                    <span class="view-adm-title">Foto:</span>
+                    <span class="view-adm-info"><?php if (!empty($imagem) and (file_exists("app/adms/assets/image/users/$tipo/$id/$imagem"))) {
+                                                    echo "<img src='" . URLADM . "app/adms/assets/image/users/$tipo/$id/$imagem' width='100' height='100'>";
+                                                } else {
+                                                    echo "<img src='" . URLADM . "app/adms/assets/image/users/not_found_img.png' width='100' height='100'>";
+                                                } ?></span>
+                </div>
+
+                <div class="view-det-adm">
+                    <span class="view-adm-title">ID:</span>
+                    <span class="view-adm-info"><?php echo $id; ?></span>
+                </div>
+
+                <div class="view-det-adm">
+                    <span class="view-adm-title">Nome: </span>
+                    <span class="view-adm-info"><?php echo $nome; ?></span>
+                </div>
+
+                <div class="view-det-adm">
+                    <span class="view-adm-title">E-mail: </span>
+                    <span class="view-adm-info"><?php echo $email; ?></span>
+                </div>
+
+                <div class="view-det-adm">
+                    <span class="view-adm-title">Usuário: </span>
+                    <span class="view-adm-info"><?php echo $user; ?></span>
+                </div>
+
+                <div class="view-det-adm">
+                    <span class="view-adm-title">Tipo: </span>
+                    <span class="view-adm-info">
+                        <?php
+                        if ($tipo === 'aluno') {
+                            echo "Aluno<br>";
+                        } elseif ($tipo === 'nutricionista') {
+                            echo "Nutricionista<br>";
+                        } elseif ($tipo === 'administrador') {
+                            echo "Administrador<br>";
+                        }
+                        ?>
+                    </span>
+                </div>
+                <?php
+                    if ($tipo === 'nutricionista' && isset($certificado_nut) && !is_null($certificado_nut)) {
+                ?>
+                <div class="view-det-adm">
+                    <span class="view-adm-title">Certificado Nutricionista: </span>
+                    <span class="view-adm-info"><?php echo $certificado_nut; ?></span>
+                </div>
+                <?php
+                }
+                ?>
+
+                <?php
+                if ($tipo === 'administrador') {
+                    echo "Administrador";
+                }
+                ?>
+                <div class="view-det-adm"> 
+                    <span class="view-adm-title">Situação do Usuário: </span>
+                    <span class="view-adm-info"><?php echo $nome_sit; ?></span>
+                </div>
+                <div class="view-det-adm">
+                    <span class="view-adm-title">Cadastrado: </span>
+                    <span class="view-adm-info"><?php echo date('d/m/Y H:i:s', strtotime($created)) ?></span>
+                </div>
+                <div class="view-det-adm">
+                    <span class="view-adm-title">Editado: </span>
+                    <span class="view-adm-info"><?php if (!empty($modified)) {
+                                                    echo date('d/m/Y H:i:s', strtotime($modified));
+                                                } ?></span>
+                </div>
+            <?php
+            }
+            ?>
+        </div>
+    </div>
+</div>
+<!-- Fim do conteudo do administrativo -->
 
 
 
-                
-
-if (isset($_SESSION['msg'])) {
-    echo $_SESSION['msg'];
-    unset($_SESSION['msg']);
-}
-
-if (!empty($this->data['viewUser'])) {
-    $user = $this->data['viewUser'][0];
-    extract($user);
-
-    echo "Imagem: $imagem<br>";
-    echo "ID: $id <br>";
-    echo "Nome: $nome <br>";
-    echo "E-mail: $email <br>";
-    
-    if ($tipo === 'aluno') {
-        echo "Tipo: Aluno<br>";
-        // Adicione aqui qualquer informação específica do aluno que desejar imprimir.
-    } elseif ($tipo === 'nutricionista') {
-        echo "Tipo: Nutricionista<br>";
-        
-        if (isset($certificado_nut) && !is_null($certificado_nut)) {
-            echo "Certificado Nutricionista: $certificado_nut <br>";
-            // Você pode adicionar qualquer outra lógica para exibir o certificado aqui.
-        }
-    } elseif ($tipo === 'administrador') {
-        echo "Tipo: Administrador<br>";
-        
-    } else {
-        echo "Tipo de usuário desconhecido<br>";
-    }
-
-    echo "Situação do Usuário: $nome_sit<br>";
-    echo "Cadastrado: ".date('d/m/Y H:i:s', strtotime($created))."<br>";
-    echo "Editado: ";
-    if(!empty($modified)){
-        echo date('d/m/Y H:i:s', strtotime($modified));
-    }
-    echo "<br>";
-}

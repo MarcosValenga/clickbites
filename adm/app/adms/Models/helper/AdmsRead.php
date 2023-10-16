@@ -2,6 +2,11 @@
 
 namespace App\adms\Models\helper;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 use PDO;
 use PDOException;
 

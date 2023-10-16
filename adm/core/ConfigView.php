@@ -2,7 +2,10 @@
 
 namespace Core;
 
-
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
 
 /**
  * Carregar as páginas da view
@@ -31,6 +34,7 @@ class ConfigView
     {
         if(file_exists('app/' .$this->nameView . '.php')){
             include 'app/adms/Views/include/head.php';
+            include 'app/adms/Views/include/navbar.php';
             include 'app/adms/Views/include/menu.php';
             include 'app/' .$this->nameView . '.php';
             include 'app/adms/Views/include/footer.php';
@@ -49,10 +53,9 @@ class ConfigView
     public function loadViewLogin():void
     {
         if(file_exists('app/' .$this->nameView . '.php')){
-            include 'app/adms/Views/include/head.php';
-         
+            include 'app/adms/Views/include/headlogin.php';
             include 'app/' .$this->nameView . '.php';
-            include 'app/adms/Views/include/footer.php';
+            include 'app/adms/Views/include/footerlogin.php';
         }else{
             die("Erro - 002: Por favor tente novamente. Caso o problema persista, entre em contato o administrador ". EMAILADM);
         }

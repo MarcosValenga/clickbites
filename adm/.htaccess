@@ -25,3 +25,10 @@ RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
 
 # index.php?url=users/index&id=2s&it=2
 # http://localhost/celke/adm/view-users/index?id=2&sit=2
+
+
+# quando houver o erro 403 redirecionar o usuario
+ErrorDocument 403 http://google.com
+
+#bloquear a opçao listar os arquivos do diretorio
+Options -Indexes

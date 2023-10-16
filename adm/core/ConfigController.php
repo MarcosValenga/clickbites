@@ -4,6 +4,11 @@
 
 namespace Core;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Recebe a URL e manipula
  * Carregar a CONTROLLER

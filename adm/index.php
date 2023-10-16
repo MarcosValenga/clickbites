@@ -2,6 +2,8 @@
 session_start();
 ob_start();
 
+define('CL1K3B1T35', True);
+
 //Carregar o Composer
 require './vendor/autoload.php';
 

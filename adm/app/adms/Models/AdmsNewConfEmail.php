@@ -2,6 +2,11 @@
 
 namespace App\adms\Models;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 use App\adms\Models\helper\AdmsConn;
 use PDO;
 
@@ -27,6 +32,9 @@ class AdmsNewConfEmail extends AdmsConn
 
     /** @var array $emailData Recebe dados do conteúdo do e-mail */
     private array $emailData;
+
+    /** @var string $fromEmail Recebe o e-mail do remetente */
+    private string $fromEmail = EMAILADM;
 
     private array $dataSave;
 
@@ -60,7 +68,7 @@ class AdmsNewConfEmail extends AdmsConn
     {
         $newConfEmail = new \App\adms\Models\helper\AdmsRead();
         $newConfEmail->fullRead(
-            "SELECT id, name, email, conf_email 
+            "SELECT id, nome, email, conf_email 
                                 FROM adms_users
                                 WHERE email=:email
                                 LIMIT :limit",
@@ -70,7 +78,7 @@ class AdmsNewConfEmail extends AdmsConn
         if ($this->resultBd) {
             $this->valConfEmail();
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: E-mail não cadastrado!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: E-mail não cadastrado!</p>";
             $this->result = false;
         }
     }
@@ -88,7 +96,7 @@ class AdmsNewConfEmail extends AdmsConn
                 $this->resultBd[0]['conf_email'] = $this->dataSave['conf_email'];
                 $this->sendEmail();
             }else{
-                $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Link não enviado, tente novamente!</p>";
+                $_SESSION['msg'] = "<p class='alert-danger'>Erro: Link não enviado, tente novamente!</p>";
                 $this->result = false;
             }
         } else {
@@ -101,24 +109,24 @@ class AdmsNewConfEmail extends AdmsConn
         $sendEmail = new \App\adms\Models\helper\AdmsSendEmail();
         $this->emailHTML();
         $this->emailText();
-        $sendEmail->sendEmail($this->emailData, 2);
+        $sendEmail->sendEmail($this->emailData, 1);
         if ($sendEmail->getResult()) {
-            $_SESSION['msg'] = "<p style='color: green;'>Novo link enviado com sucesso. Acesse a sua caixa de e-mail para confimar o e-mail!</p>";
+            $_SESSION['msg'] = "<p class='alert-success'>Novo link enviado com sucesso. Acesse a sua caixa de e-mail para confimar o e-mail!</p>";
             $this->result = true;
         } else {
             $this->fromEmail = $sendEmail->getFromEmail();
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Link não enviado, tente novamente ou entre em contato com o e-mail {$this->fromEmail}!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Link não enviado, tente novamente ou entre em contato com o e-mail {$this->fromEmail}!</p>";
             $this->result = false;
         }
     }
 
     private function emailHTML(): void
     {
-        $name = explode(" ", $this->resultBd[0]['name']);
-        $this->firstName = $name[0];
+        $nome = explode(" ", $this->resultBd[0]['nome']);
+        $this->firstName = $nome[0];
 
         $this->emailData['toEmail'] = $this->data['email'];
-        $this->emailData['toName'] = $this->resultBd[0]['name'];
+        $this->emailData['toName'] = $this->resultBd[0]['nome'];
         $this->emailData['subject'] = "Confirma sua conta";
         $this->url = URLADM . "conf-email/index?key=" . $this->resultBd[0]['conf_email'];
 

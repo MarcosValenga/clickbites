@@ -2,6 +2,11 @@
 
 namespace App\adms\Models;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Validar os dados do login
  *
@@ -42,14 +47,14 @@ class AdmsLogin
         $this->data = $data;
 
         $viewUser = new \App\adms\Models\helper\AdmsRead();
-        $viewUser->fullRead("SELECT id, nome, email, password, imagem, fk_sits_usuario FROM adms_users WHERE user =:user OR email =:email LIMIT :limit", "user={$this->data['user']}&email={$this->data['user']}&limit=1");
+        $viewUser->fullRead("SELECT id, nome, email, password, imagem, 'administrador' AS tipo, fk_sits_usuario FROM adms_users WHERE user =:user OR email =:email LIMIT :limit", "user={$this->data['user']}&email={$this->data['user']}&limit=1");
 
         $this->resultBd = $viewUser->getResult();
-        var_dump($this->resultBd);
+        //var_dump($this->resultBd);
         if ($this->resultBd) {
             $this->valEmailPerm();
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário ou a senha incorreta!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Usuário ou a senha incorreta!</p>";
             $this->result = false;
         }
     }
@@ -59,16 +64,16 @@ class AdmsLogin
         if ($this->resultBd[0]['fk_sits_usuario'] == 1) {
             $this->valPassword();
         } elseif ($this->resultBd[0]['fk_sits_usuario'] == 3) {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Necessário confirmar o e-mail, solicite novo link <a href='".URLADM."new-conf-email/index'>Clique aqui</a>!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Necessário confirmar o e-mail, solicite novo link <a href='".URLADM."new-conf-email/index'>Clique aqui</a>!</p>";
             $this->result = false;
         } elseif ($this->resultBd[0]['fk_sits_usuario'] == 5) {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: E-mail descadastrado, entre em contato com a empresa!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: E-mail descadastrado, entre em contato com a empresa!</p>";
             $this->result = false;
         } elseif ($this->resultBd[0]['fk_sits_usuario'] == 2) {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: E-mail inativo, entre em contato com a empresa!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: E-mail inativo, entre em contato com a empresa!</p>";
             $this->result = false;
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: E-mail inativo, entre em contato com a empresa!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: E-mail inativo, entre em contato com a empresa!</p>";
             $this->result = false;
         }
     }
@@ -88,9 +93,10 @@ class AdmsLogin
             $_SESSION['user_nome'] = $this->resultBd[0]['nome'];
             $_SESSION['user_email'] = $this->resultBd[0]['email'];
             $_SESSION['user_imagem'] = $this->resultBd[0]['imagem'];
+            $_SESSION['user_tipo'] = $this->resultBd[0]['tipo'];
             $this->result = true;
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário ou a senha incorreta!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Usuário ou a senha incorreta!</p>";
             $this->result = false;
         }
     }

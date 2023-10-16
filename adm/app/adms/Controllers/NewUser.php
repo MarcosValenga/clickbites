@@ -2,6 +2,11 @@
 
 namespace App\adms\Controllers;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Controller da página novo usuário
  * @author Cesar <cesar@celke.com.br>
@@ -22,40 +27,40 @@ class NewUser
      * Senão, instância a classe responsável em carregar a View e enviar os dados para View.
      * 
      * @return void
-     */public function index(): void
-{
-    $this->dataForm = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+    */public function index(): void
+    {
+        $this->dataForm = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 
-    if (!empty($this->dataForm['SendNewUser'])) {
-        unset($this->dataForm['SendNewUser']);
+        if (!empty($this->dataForm['SendNewUser'])) {
+            unset($this->dataForm['SendNewUser']);
 
-        $table = ""; // Determine dinamicamente o nome da tabela com base no tipo de usuário
+            $table = ""; // Determine dinamicamente o nome da tabela com base no tipo de usuário
 
-        if (isset($this->dataForm['tipo_usr'])) {
-            $tipo_usr = $this->dataForm['tipo_usr'];
-            if ($tipo_usr === 'aluno') {
-                $table = "alunos";
-            } elseif ($tipo_usr === 'nutricionista') {
-                $table = "nutricionistas";
-            } elseif ($tipo_usr === 'administrador') {
-                $table = "administradores";
+            if (isset($this->dataForm['tipo_usr'])) {
+                $tipo_usr = $this->dataForm['tipo_usr'];
+                if ($tipo_usr === 'aluno') {
+                    $table = "alunos";
+                } elseif ($tipo_usr === 'nutricionista') {
+                    $table = "nutricionistas";
+                } elseif ($tipo_usr === 'administrador') {
+                    $table = "administradores";
+                }
             }
-        }
 
-        $createNewUser = new \App\adms\Models\AdmsNewUser();
-        $createNewUser->create($this->dataForm, $table);
+            $createNewUser = new \App\adms\Models\AdmsNewUser();
+            $createNewUser->create($this->dataForm, $table);
 
-        if ($createNewUser->getResult()) {
-            $urlRedirect = URLADM;
-            header("Location: $urlRedirect");
+            if ($createNewUser->getResult()) {
+                $urlRedirect = URLADM;
+                header("Location: $urlRedirect");
+            } else {
+                $this->data['form'] = $this->dataForm;
+                $this->viewNewUser();
+            }
         } else {
-            $this->data['form'] = $this->dataForm;
             $this->viewNewUser();
         }
-    } else {
-        $this->viewNewUser();
     }
-}
 
 
     /**

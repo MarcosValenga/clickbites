@@ -2,6 +2,11 @@
 
 namespace App\adms\Models;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 use App\adms\Models\helper\AdmsConn;
 use PDO;
 
@@ -49,11 +54,11 @@ class AdmsConfEmail extends AdmsConn
             if ($this->resultBd) {
                 $this->updateSitUser();
             } else {
-                $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Necessário confirmar o e-mail, solicite novo link <a href='".URLADM."new-conf-email/index'>Clique aqui</a>!</p>";
+                $_SESSION['msg'] = "<p class='alert-danger'>Erro: Necessário confirmar o e-mail, solicite novo link <a href='".URLADM."new-conf-email/index'>Clique aqui</a>!</p>";
                 $this->result = false;
             }
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Necessário confirmar o e-mail, solicite novo link <a href='".URLADM."new-conf-email/index'>Clique aqui</a>!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Necessário confirmar o e-mail, solicite novo link <a href='".URLADM."new-conf-email/index'>Clique aqui</a>!</p>";
             $this->result = false;
         }
     }
@@ -61,17 +66,17 @@ class AdmsConfEmail extends AdmsConn
     private function updateSitUser(): void
     {
         $this->dataSave['conf_email'] = null;
-        $this->dataSave['adms_sits_user_id'] = 1;
+        $this->dataSave['fk_sits_usuario'] = 1;
         $this->dataSave['modified'] = date("Y-m-d H:i:s");
 
         $upConfEmail = new \App\adms\Models\helper\AdmsUpdate();
         $upConfEmail->exeUpdate("adms_users", $this->dataSave, "WHERE id=:id", "id={$this->resultBd[0]['id']}");
 
         if ($upConfEmail->getResult()) {
-            $_SESSION['msg'] = "<p style='color: green;'>E-mail ativado com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-success'>E-mail ativado com sucesso!</p>";
             $this->result = true;
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Necessário confirmar o e-mail, solicite novo link <a href='".URLADM."new-conf-email/index'>Clique aqui</a>!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Necessário confirmar o e-mail, solicite novo link <a href='".URLADM."new-conf-email/index'>Clique aqui</a>!</p>";
             $this->result = false;
         }
     }

@@ -2,6 +2,11 @@
 
 namespace App\adms\Models\helper;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 use PDO;
 use PDOException;
 
@@ -55,9 +60,12 @@ class AdmsUpdate extends AdmsConn
         try {
             $this->update->execute(array_merge($this->data, $this->value));
             $this->result = true;
+            //var_dump($this->result);
         } catch (PDOException $err) {
             $this->result = null;
-        }
+            //var_dump($this->result);
+            //echo "Erro de SQL: " . $err->getMessage(); // Adicione esta linha para exibir a mensagem de erro
+        }        
     }
 
     /**
@@ -69,6 +77,7 @@ class AdmsUpdate extends AdmsConn
     private function connection(): void
     {
         $this->conn = $this->connectDb();
+        $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->update = $this->conn->prepare($this->query);
     }
 }

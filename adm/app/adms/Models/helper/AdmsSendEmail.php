@@ -2,6 +2,11 @@
 
 namespace App\adms\Models\helper;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -58,14 +63,14 @@ class AdmsSendEmail
     private function infoPhpMailer(): void
     {
         $confEmail = new \App\adms\Models\helper\AdmsRead();
-        $confEmail->fullRead("SELECT name, email, host, username, password, smtpsecure, port FROM adms_confs_emails WHERE id =:id LIMIT :limit", "id={$this->optionConfEmail}&limit=1");
+        $confEmail->fullRead("SELECT nome, email, host, user, password, smtpsecure, port FROM adms_confs_emails WHERE id =:id LIMIT :limit", "id={$this->optionConfEmail}&limit=1");
         $this->resultBd = $confEmail->getResult();
         if ($this->resultBd) {
             $this->dataInfoEmail['host'] = $this->resultBd[0]['host'];
             $this->dataInfoEmail['fromEmail'] = $this->resultBd[0]['email'];
             $this->fromEmail = $this->dataInfoEmail['fromEmail'];
-            $this->dataInfoEmail['fromName'] = $this->resultBd[0]['name'];
-            $this->dataInfoEmail['username'] = $this->resultBd[0]['username'];
+            $this->dataInfoEmail['fromName'] = $this->resultBd[0]['nome'];
+            $this->dataInfoEmail['user'] = $this->resultBd[0]['user'];
             $this->dataInfoEmail['password'] = $this->resultBd[0]['password'];
             $this->dataInfoEmail['smtpsecure'] = $this->resultBd[0]['smtpsecure'];
             $this->dataInfoEmail['port'] = $this->resultBd[0]['port'];
@@ -86,7 +91,7 @@ class AdmsSendEmail
             $mail->isSMTP();
             $mail->Host       = $this->dataInfoEmail['host'];
             $mail->SMTPAuth   = true;
-            $mail->Username   = $this->dataInfoEmail['username'];
+            $mail->Username   = $this->dataInfoEmail['user'];
             $mail->Password   = $this->dataInfoEmail['password'];
             $mail->SMTPSecure = $this->dataInfoEmail['smtpsecure'];
             $mail->Port       = $this->dataInfoEmail['port'];

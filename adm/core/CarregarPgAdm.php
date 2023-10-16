@@ -4,6 +4,11 @@
 
 namespace Core;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Verificar se existe a classe
  * Carregar a CONTROLLER
@@ -62,7 +67,7 @@ class CarregarPgAdm
 
     private function pgPublic():void
     {
-        $this->listPgPublic = ["Login", "Erro", "Logout", "NewUser"];
+        $this->listPgPublic = ["Login", "Erro", "Logout", "NewUser", "ConfEmail", "NewConfEmail", "RecoverPassword", "UpdatePassword"];
 
         if(in_array($this->urlController, $this->listPgPublic)){
             $this->classLoad = "\\App\\adms\\Controllers\\" . $this->urlController;
@@ -75,11 +80,11 @@ class CarregarPgAdm
 
     private function pgPrivate():void
     {
-        $this->listPgPrivate = ["Dashboard", "ListUsers", "ViewUser", "AddUsers","EditUser", "DeleteUser"];
+        $this->listPgPrivate = ["Dashboard", "ListUsers", "ViewUser", "AddUsers","EditUser", "DeleteUser", "EditUserPassword", "EditUserImage", "ViewProfile", "EditProfile", "EditProfilePassword", "EditProfileImage"];
         if(in_array($this->urlController, $this->listPgPrivate)){
             $this->verifyLogin();
         }else{
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Página não encontrada</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Página não encontrada</p>";
             $urlRedirect = URLADM . "login/index";
             header("Location: $urlRedirect");
         }
@@ -92,7 +97,7 @@ class CarregarPgAdm
         {
             $this->classLoad = "\\App\\adms\\Controllers\\" . $this->urlController;
         }else{
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Para acessar a página realize o login!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Para acessar a página realize o login!</p>";
             $urlRedirect = URLADM . "login/index";
             header("Location: $urlRedirect");
         }

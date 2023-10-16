@@ -2,6 +2,11 @@
 
 namespace App\adms\Controllers;
 
+if(!defined('CL1K3B1T35')){
+    header("Location: /");
+    die("Erro: Página não encontrada<br>");
+}
+
 /**
  * Controller da página cadastrar novo usuário
  * @author 
@@ -13,7 +18,7 @@ class AddUsers
     private array|string|null $data = [];
 
     /** @var array $dataForm Recebe os dados do formulario */
-    private array|null $dataForm;
+    private array|null $dataForm ;
 
     /**
      * Instantiar a classe responsável em carregar a View e enviar os dados para View.
@@ -28,11 +33,11 @@ class AddUsers
         $this->dataForm = filter_input_array(INPUT_POST, FILTER_DEFAULT);        
 
         if(!empty($this->dataForm['SendAddUser'])){
-            var_dump($this->dataForm);
+            
             unset($this->dataForm['SendAddUser']);
             $createUser = new \App\adms\Models\AdmsAddUsers();
             $createUser->create($this->dataForm);
-            var_dump($createUser);
+            
             if($createUser->getResult()){
                 $urlRedirect = URLADM . "list-users/index";
                 header("Location: $urlRedirect");
@@ -51,7 +56,12 @@ class AddUsers
      */
     private function viewAddUser(): void
     {
+        $listSelect = new \App\adms\Models\AdmsAddUsers();
+        $this->data['select'] = $listSelect->listSelect();
+
+
         $loadView = new \Core\ConfigView("adms/Views/users/addUser", $this->data);
         $loadView->loadView();
     }
+
 }
