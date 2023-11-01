@@ -9,7 +9,7 @@ if(!defined('CL1K3B1T35')){
 
 /**
  * Controller da página para receber novo link para confirmar e-mail
- * @author Cesar <cesar@celke.com.br>
+ * @author Marcos <marcosvalenga360@gmail.com>
  * http://localhost/celke/adm/new-conf-email/index
  */
 class NewConfEmail

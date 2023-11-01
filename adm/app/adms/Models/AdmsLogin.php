@@ -10,7 +10,7 @@ if(!defined('CL1K3B1T35')){
 /**
  * Validar os dados do login
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsLogin
 {

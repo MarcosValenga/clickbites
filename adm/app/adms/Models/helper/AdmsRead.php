@@ -2,7 +2,7 @@
 
 namespace App\adms\Models\helper;
 
-if(!defined('CL1K3B1T35')){
+if (!defined('CL1K3B1T35')) {
     header("Location: /");
     die("Erro: Página não encontrada<br>");
 }
@@ -13,7 +13,7 @@ use PDOException;
 /**
  * Classe gernérica para selecionar registro no banco de dados
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsRead extends AdmsConn
 {
@@ -50,10 +50,9 @@ class AdmsRead extends AdmsConn
      * @return void
      */
     public function exeRead(string $table, string|null $terms = null, string|null $parseString = null): void
-    {   
+    {
         if (!empty($parseString)) {
             parse_str($parseString, $this->values);
-            
         }
 
         $this->select = "SELECT * FROM {$table} {$terms}";
@@ -91,9 +90,11 @@ class AdmsRead extends AdmsConn
             $this->query->execute();
             $this->result = $this->query->fetchAll();
         } catch (PDOException $err) {
+            //var_dump("Erro: " . $err->getMessage());
             $this->result = null;
         }
     }
+    
 
     /**
      * Obtem a conexão com o banco de dados da classe pai "Conn".

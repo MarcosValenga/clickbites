@@ -92,12 +92,14 @@ if (isset($this->data['form'])) {
                     <div class="column">
                         <?php
                         $tipo = "";
-                        if (isset($valorForm['tipo'])) {
+                        if (isset($valorForm['tipo'])){
                             $tipo = $valorForm['tipo'];
-                        }
+                        }elseif (isset($valorForm['tipo_usr']))
+                            $tipo = $valorForm['tipo_usr'];
+
                         ?>
                         <label class="title-input">Selecione o tipo de usuário:</label>
-                        <select name="tipo_usr" id="slc_tipo" class="input-adm">
+                        <select name="tipo_usr" id="tipo_usr" class="input-adm">
                             <option value="">Selecione</option>
                             <option value="aluno" <?php echo ($tipo === 'aluno') ? 'selected' : ''; ?>>Aluno</option>
                             <option value="nutricionista" <?php echo ($tipo === 'nutricionista') ? 'selected' : ''; ?>>Nutricionista</option>

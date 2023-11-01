@@ -10,7 +10,7 @@ if(!defined('CL1K3B1T35')){
 /**
  * Editar o perfil do usuario no banco de dados
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsEditProfile
 {
@@ -68,7 +68,7 @@ class AdmsEditProfile
             
 
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00'>Erro: Perfil não encontrado!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Perfil não encontrado!</p>";
             $this->result = false;
         }
     }
@@ -130,10 +130,10 @@ class AdmsEditProfile
         if($upUser->getResult()){
             $_SESSION['user_nome'] = $this->data['nome'];
             $_SESSION['user_email'] = $this->data['email'];
-            $_SESSION['msg'] = "<p style='color: green;'>Perfil editado com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-success'>Perfil editado com sucesso!</p>";
             $this->result = true;
         }else{
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Perfil não editado com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Perfil não editado com sucesso!</p>";
             $this->result = false;
         }
     }

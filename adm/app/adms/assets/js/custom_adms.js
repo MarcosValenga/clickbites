@@ -124,7 +124,7 @@ if (formNewUser) {
         // Verificar se o campo esta vazio
         if (nome === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo nome!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo nome!</p>";
             return;
         }
 
@@ -133,7 +133,7 @@ if (formNewUser) {
         // Verificar se o campo esta vazio
         if (email === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo e-mail!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo e-mail!</p>";
             return;
         }
 
@@ -142,25 +142,25 @@ if (formNewUser) {
         // Verificar se o campo esta vazio
         if (password === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo senha!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo senha!</p>";
             return;
         }
         // Verificar se o campo senha possui 6 caracteres
         if (password.length < 6) {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha deve ter no mínimo 6 caracteres!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: A senha deve ter no mínimo 6 caracteres!</p>";
             return;
         }
         // Verificar se o campo senha não possui números repetidos
         if (password.match(/([1-9]+)\1{1,}/)) {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha não deve ter número repetido!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: A senha não deve ter número repetido!</p>";
             return;
         }
         // Verificar se o campo senha possui letras
         if (!password.match(/[A-Za-z]/)) {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha deve ter pelo menos uma letra!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: A senha deve ter pelo menos uma letra!</p>";
             return;
         }
 
@@ -169,12 +169,13 @@ if (formNewUser) {
         // Verificar se o campo esta vazio
         if (slc_tipo === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo Tipo de Usuário!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo Tipo de Usuário!</p>";
             return;
         }
 
     });
 }
+
 
 const formLogin = document.getElementById("form-login");
 if (formLogin) {
@@ -185,7 +186,7 @@ if (formLogin) {
         // Verificar se o campo esta vazio
         if (user === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo usuário!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo usuário!</p>";
             return;
         }
 
@@ -194,7 +195,7 @@ if (formLogin) {
         // Verificar se o campo esta vazio
         if (password === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo senha!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo senha!</p>";
             return;
         }
     });
@@ -208,7 +209,7 @@ if (formNewConfEmail) {
         // Verificar se o campo esta vazio
         if (email === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo e-mail!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo e-mail!</p>";
             return;
         }
 
@@ -223,7 +224,7 @@ if (formRecoverPass) {
         // Verificar se o campo esta vazio
         if (email === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo e-mail!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo e-mail!</p>";
             return;
         }
 
@@ -238,12 +239,64 @@ if (formUpdatePass) {
         // Verificar se o campo esta vazio
         if (email === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo senha!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo senha!</p>";
             return;
         }
 
     });
 }
+
+const formEditUser = document.getElementById("form-edit-user");
+if (formEditUser) {
+    formEditUser.addEventListener("submit", async(e) => {
+        //Receber o valor do campo
+        var nome = document.querySelector("#nome").value;
+        // Verificar se o campo esta vazio
+        if (nome === "") {
+            e.preventDefault();
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo nome!</p>";
+            return;
+        }
+
+        //Receber o valor do campo
+        var email = document.querySelector("#email").value;
+        // Verificar se o campo esta vazio
+        if (email === "") {
+            e.preventDefault();
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo e-mail!</p>";
+            return;
+        }
+
+        //Receber o valor do campo
+        var user = document.querySelector("#user").value;
+        // Verificar se o campo esta vazio
+        if (user === "") {
+            e.preventDefault();
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo usuário!</p>";
+            return;
+        }
+
+        //Receber o valor do campo
+        var fk_sits_usuario = document.querySelector("#fk_sits_usuario").value;
+        // Verificar se o campo esta vazio
+        if (fk_sits_usuario === "") {
+            e.preventDefault();
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo Situação!</p>";
+            return;
+        }
+
+        //Receber o valor do campo
+        var slc_tipo = document.querySelector("#tipo_usr").value;
+        // Verificar se o campo esta vazio
+        if (slc_tipo === "") {
+            e.preventDefault();
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo Tipo de Usuário!</p>";
+            return;
+        }
+
+    });
+}
+
 
 const formAddUser = document.getElementById("form-add-user");
 if (formAddUser) {
@@ -253,7 +306,7 @@ if (formAddUser) {
         // Verificar se o campo esta vazio
         if (nome === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo nome!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo nome!</p>";
             return;
         }
 
@@ -262,16 +315,7 @@ if (formAddUser) {
         // Verificar se o campo esta vazio
         if (email === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo e-mail!</p>";
-            return;
-        }
-
-        //Receber o valor do campo
-        var user = document.querySelector("#user").value;
-        // Verificar se o campo esta vazio
-        if (user === "") {
-            e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo usuário!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo e-mail!</p>";
             return;
         }
 
@@ -280,34 +324,25 @@ if (formAddUser) {
         // Verificar se o campo esta vazio
         if (password === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo senha!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo senha!</p>";
             return;
         }
         // Verificar se o campo senha possui 6 caracteres
         if (password.length < 6) {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha deve ter no mínimo 6 caracteres!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: A senha deve ter no mínimo 6 caracteres!</p>";
             return;
         }
         // Verificar se o campo senha não possui números repetidos
         if (password.match(/([1-9]+)\1{1,}/)) {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha não deve ter número repetido!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: A senha não deve ter número repetido!</p>";
             return;
         }
         // Verificar se o campo senha possui letras
         if (!password.match(/[A-Za-z]/)) {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha deve ter pelo menos uma letra!</p>";
-            return;
-        }
-
-        //Receber o valor do campo
-        var slc_tipo = document.querySelector("#slc_tipo").value;
-        // Verificar se o campo esta vazio
-        if (slc_tipo === "") {
-            e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo Tipo de Usuário!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: A senha deve ter pelo menos uma letra!</p>";
             return;
         }
 
@@ -316,10 +351,18 @@ if (formAddUser) {
         // Verificar se o campo esta vazio
         if (fk_sits_usuario === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo Situação!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo Situação!</p>";
             return;
         }
 
+        //Receber o valor do campo
+        var tipo_usr = document.querySelector("#tipo_usr").value;
+        // Verificar se o campo esta vazio
+        if (tipo_usr === "") {
+            e.preventDefault();
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo Tipo de Usuário!</p>";
+            return;
+        }
     });
 }
 
@@ -331,25 +374,25 @@ if (formEditUserPass) {
         // Verificar se o campo esta vazio
         if (password === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo senha!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo senha!</p>";
             return;
         }
         // Verificar se o campo senha possui 6 caracteres
         if (password.length < 6) {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha deve ter no mínimo 6 caracteres!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: A senha deve ter no mínimo 6 caracteres!</p>";
             return;
         }
         // Verificar se o campo senha não possui números repetidos
         if (password.match(/([1-9]+)\1{1,}/)) {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha não deve ter número repetido!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: A senha não deve ter número repetido!</p>";
             return;
         }
         // Verificar se o campo senha possui letras
         if (!password.match(/[A-Za-z]/)) {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha deve ter pelo menos uma letra!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: A senha deve ter pelo menos uma letra!</p>";
             return;
         }
 
@@ -358,7 +401,7 @@ if (formEditUserPass) {
         // Verificar se o campo esta vazio
         if (slc_tipo === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo Tipo de Usuário! Atualize a página e Tente Novamente</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo Tipo de Usuário! Atualize a página e Tente Novamente</p>";
             return;
         }
 
@@ -373,7 +416,7 @@ if (formEditProfile) {
         // Verificar se o campo esta vazio
         if (nome === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo nome!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo nome!</p>";
             return;
         }
 
@@ -382,7 +425,7 @@ if (formEditProfile) {
         // Verificar se o campo esta vazio
         if (email === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo e-mail!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo e-mail!</p>";
             return;
         }
 
@@ -391,43 +434,17 @@ if (formEditProfile) {
         // Verificar se o campo esta vazio
         if (user === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo usuário!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo usuário!</p>";
             return;
         }
 
+ 
         //Receber o valor do campo
-        var password = document.querySelector("#password").value;
+        var tipo_usr = document.querySelector("#tipo_usr").value;
         // Verificar se o campo esta vazio
-        if (password === "") {
+        if (tipo_usr === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo senha!</p>";
-            return;
-        }
-        // Verificar se o campo senha possui 6 caracteres
-        if (password.length < 6) {
-            e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha deve ter no mínimo 6 caracteres!</p>";
-            return;
-        }
-        // Verificar se o campo senha não possui números repetidos
-        if (password.match(/([1-9]+)\1{1,}/)) {
-            e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha não deve ter número repetido!</p>";
-            return;
-        }
-        // Verificar se o campo senha possui letras
-        if (!password.match(/[A-Za-z]/)) {
-            e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: A senha deve ter pelo menos uma letra!</p>";
-            return;
-        }
-
-        //Receber o valor do campo
-        var slc_tipo = document.querySelector("#slc_tipo").value;
-        // Verificar se o campo esta vazio
-        if (slc_tipo === "") {
-            e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo Tipo de Usuário! Atualize a página e Tente Novamente</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo Tipo de Usuário! Atualize a página e Tente Novamente</p>";
             return;
         }
 
@@ -444,16 +461,16 @@ if (formEditUserImg) {
         // Verificar se o campo esta vazio
         if (new_image === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário selecionar uma imagem!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário selecionar uma imagem!</p>";
             return;
         }
 
         //Receber o valor do campo
-        var slc_tipo = document.querySelector("#slc_tipo").value;
+        var tipo_usr = document.querySelector("#tipo_usr").value;
         // Verificar se o campo esta vazio
-        if (slc_tipo === "") {
+        if (tipo_usr === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo Tipo de Usuário! Atualize a página e Tente Novamente</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo Tipo de Usuário! Atualize a página e Tente Novamente</p>";
             return;
         }
 
@@ -470,16 +487,16 @@ if (formEditProfImg) {
         // Verificar se o campo esta vazio
         if (new_image === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário selecionar uma imagem!</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário selecionar uma imagem!</p>";
             return;
         }
 
         //Receber o valor do campo
-        var slc_tipo = document.querySelector("#slc_tipo").value;
+        var tipo_usr = document.querySelector("#tipo_usr").value;
         // Verificar se o campo esta vazio
-        if (slc_tipo === "") {
+        if (tipo_usr === "") {
             e.preventDefault();
-            document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário preencher o campo Tipo de Usuário! Atualize a página e Tente Novamente</p>";
+            document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário preencher o campo Tipo de Usuário! Atualize a página e Tente Novamente</p>";
             return;
         }
 
@@ -497,7 +514,7 @@ function inputFileValImg(){
 
     if(!allowedExtensions.exec(filePath)){
         new_image.value = '';
-        document.getElementById("msg").innerHTML = "<p style='color: #f00;'>Erro: Necessário selecionar uma imagem JPEG ou PNG!</p>";
+        document.getElementById("msg").innerHTML = "<p class='alert-danger'>Erro: Necessário selecionar uma imagem JPEG ou PNG!</p>";
         return;
     }else{
         previewImage(new_image);

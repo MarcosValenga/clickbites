@@ -10,7 +10,7 @@ if(!defined('CL1K3B1T35')){
 /**
  * Confirmar a chave atualizar senha. Cadastrar nova senha
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsUpdatePassword
 {

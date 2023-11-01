@@ -12,7 +12,7 @@ use App\adms\Models\helper\AdmsConn;
 /**
  * Cadastrar o usuário no banco de dados
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsNewUser 
 {

@@ -12,6 +12,7 @@ use PDO;
 
 /**
  * Conecta ao banco de dados
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 abstract class AdmsConn{
     /**

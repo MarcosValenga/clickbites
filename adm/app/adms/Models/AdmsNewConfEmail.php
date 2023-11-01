@@ -13,7 +13,7 @@ use PDO;
 /**
  * Solicitar novo link para confirmar o e-mail
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsNewConfEmail extends AdmsConn
 {

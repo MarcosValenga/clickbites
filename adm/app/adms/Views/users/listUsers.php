@@ -4,6 +4,10 @@ if (!defined('CL1K3B1T35')) {
     header("Location: /");
     die("Erro: Página não encontrada<br>");
 }
+
+if (isset($this->data['form'])){
+    $valorForm = $this->data['form'];
+}
 ?>
 
 
@@ -18,6 +22,77 @@ if (!defined('CL1K3B1T35')) {
                 ?>
             </div>
         </div>
+        <div class="top-list">
+            <form method="POST" action="" id="form-search-user">
+                <div class="row-input-search">
+                    <?php
+                        $searchName = "";
+                        if (isset($valorForm['searchName'])) {
+                            $searchName = $valorForm['searchName'];
+                        }
+                    ?>
+                    <div class="column">
+                        <label class="title-input-search">Nome: </label>
+                        <input type="text" name="searchName" id="searchName" class="input-search" placeholder="Pesquisar pelo nome..." value="<?php echo $searchName; ?>">
+                    </div>
+
+                    <?php
+                        $searchEmail = "";
+                        if (isset($valorForm['searchEmail'])) {
+                            $searchEmail = $valorForm['searchEmail'];
+                        }
+                    ?>
+                    <div class="column">
+                        <label class="title-input-search">E-mail: </label>
+                        <input type="text" name="searchEmail" id="searchEmail" class="input-search" placeholder="Pesquisar pelo e-mail..." value="<?php echo $searchEmail; ?>">
+                    </div>
+
+                    <?php
+                        $searchTipo = "";
+                        if (isset($valorForm['searchTipo'])) {
+                            $searchTipo = $valorForm['searchTipo'];
+                        }
+                    ?>
+                    <div class="column">
+                        <label class="title-input-search">Selecione o tipo de usuário:</label>
+                        <select name="searchTipo" id="searchTipo" class="input-search">
+                            <option value="">Selecione</option>
+                            <option value="aluno" <?php echo ($searchTipo === 'aluno') ? 'selected' : ''; ?>>Aluno</option>
+                            <option value="nutricionista" <?php echo ($searchTipo === 'nutricionista') ? 'selected' : ''; ?>>Nutricionista</option>
+                            <option value="administrador" <?php echo ($searchTipo === 'administrador') ? 'selected' : ''; ?>>Administrador</option>
+                        </select>
+                    </div>
+                    
+                    <?php
+                        $searchSitUser = "";
+                        if (isset($valorForm['searchSitUser'])) {
+                            $searchSitUser = $valorForm['searchSitUser'];
+                        }
+                    ?>
+                    <div class="column">
+                    <label for="" class="title-input-search">Situação:</label> 
+                        <select name="searchSitUser" id="searchSitUser" class="input-search">
+                            <option value="">Selecione</option>
+                            <?php
+                            foreach ($this->data['select']['sit'] as $sit) {
+                                extract($sit);
+                                if ((isset($valorForm['searchSitUser'])) and ($valorForm['searchSitUser'] == $id_sit)) {
+                                    echo " <option value='$id_sit' selected>$nome_sit</option>";
+                                } else {
+                                    echo " <option value='$id_sit' >$nome_sit</option>";
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="column margin-top-search">
+                        <button type="submit" name="SendSearchUser" class="btn-info" value="Pesquisar">Pesquisar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="content-adm">
             <?php
             if (isset($_SESSION['msg'])) {
@@ -41,7 +116,7 @@ if (!defined('CL1K3B1T35')) {
                 foreach ($this->data['listUsers'] as $user) {
                     extract($user);
                 ?>
-                    <tr>
+                    <tr class="list-row-content">
                         <td class="list-body-content"><?php echo $id; ?></td>
                         <td class="list-body-content"><?php echo $nome; ?></td>
                         <td class="list-body-content table-sm-none"><?php echo $email; ?></td>

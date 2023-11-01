@@ -10,7 +10,7 @@ if(!defined('CL1K3B1T35')){
 /**
  * Editar a Imagem do usuário no banco de dados
  *
- * @author 
+ * @author Marcos <marcosvalenga360@gmail.com> 
  */
 class AdmsEditUserImage
 {
@@ -104,7 +104,7 @@ class AdmsEditUserImage
             $this->result = true;
             return true;
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00'>Erro: Usuário não encontrado!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Usuário não encontrado!</p>";
             $this->result = false;
             return false;
         }
@@ -124,7 +124,7 @@ class AdmsEditUserImage
                 //$this->result = false;
                 $this->valInput();
             } else {
-                $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Necessário selecionar uma imagem!</p>";
+                $_SESSION['msg'] = "<p class='alert-danger'>Erro: Necessário selecionar uma imagem!</p>";
                 $this->result = false;
             }
         } else {
@@ -206,7 +206,7 @@ class AdmsEditUserImage
         if($upUser->getResult()){
             $this->deleteImage();
         }else{
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário não editado com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>>Erro: Usuário não editado com sucesso!</p>";
             $this->result = false;
         }
     }
@@ -221,7 +221,7 @@ class AdmsEditUserImage
         if ($image !== null && file_exists($this->delImg) && is_file($this->delImg)) {
             unlink($this->delImg);
         } 
-        $_SESSION['msg'] = "<p style='color: green;'>Imagem editada com sucesso!</p>";
+        $_SESSION['msg'] = "<p class='alert-success'>Imagem editada com sucesso!</p>";
         $this->result = true;
     }
 }

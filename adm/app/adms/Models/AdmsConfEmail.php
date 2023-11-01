@@ -13,7 +13,7 @@ use PDO;
 /**
  * Confirmar o cadastro do usuário, alterando a situação no banco de dados
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsConfEmail extends AdmsConn
 {

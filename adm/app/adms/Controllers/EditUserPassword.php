@@ -10,7 +10,7 @@ if(!defined('CL1K3B1T35')){
 
 /**
  * Controller da página editar senha do usuário
- * @author 
+ * @author Marcos <marcosvalenga360@gmail.com> 
  */
 class EditUserPassword
 {

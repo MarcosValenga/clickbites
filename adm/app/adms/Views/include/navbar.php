@@ -1,10 +1,11 @@
  <!-- Inicio Navbar -->
  <nav class="navbar">
         <div class="navbar-content">
-            <div class="bars">
-                <i class="fa-solid fa-bars"></i>
-            </div>
+            <!--<div class="bars">
+                <i class="fa-solid fa-bars fa-xl"></i>
+            </div>-->
             <img src="<?php echo URLADM; ?>app/adms/assets/logos/logo2.png" alt="Celke" class="logo">
+            <h1>Click Bites - Área Administrativa</h1>
         </div>
 
         <div class="navbar-content">

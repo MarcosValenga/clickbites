@@ -10,7 +10,7 @@ if(!defined('CL1K3B1T35')){
 /**
  * Editar o usuário no banco de dados
  *
- * @author 
+ * @author Marcos <marcosvalenga360@gmail.com> 
  */
 class AdmsEditUser
 {
@@ -93,7 +93,7 @@ class AdmsEditUser
             //var_dump($this->resultBd);
             $this->result = true;
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00'>Erro: Usuário não encontrado!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Usuário não encontrado!</p>";
             $this->result = false;
         }
     }
@@ -154,7 +154,6 @@ class AdmsEditUser
     private function edit(string $table): void
     {   
         $tipo_usr = $this->data['tipo_usr'];
-        //var_dump($tipo_usr);
         unset($this->data['tipo_usr']);
 
         $this->data['modified'] = date("Y-m-d H:i:s");
@@ -163,10 +162,10 @@ class AdmsEditUser
         $upUser->exeUpdate("$table", $this->data, "WHERE id=:id", "id={$this->data['id']}");
 
         if($upUser->getResult()){
-            $_SESSION['msg'] = "<p style='color: green;'>Usuário editado com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-success'>Usuário editado com sucesso!</p>";
             $this->result = true;
         }else{
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Usuário não editado com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Usuário não editado com sucesso!</p>";
             $this->result = false;
         }
     }

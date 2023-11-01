@@ -10,7 +10,7 @@ if(!defined('CL1K3B1T35')){
 /**
  * Classe gernérica para selecionar registro no banco de dados
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsUploadImgRes
 {

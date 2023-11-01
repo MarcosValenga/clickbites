@@ -9,7 +9,8 @@ if(!defined('CL1K3B1T35')){
 
 /**
  * Controller da página cadastrar novo usuário
- * @author 
+ * 
+ * @author Marcos <marcosvalenga360@gmail.com> 
  */
 class AddUsers
 {

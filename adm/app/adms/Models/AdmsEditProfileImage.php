@@ -10,7 +10,7 @@ if(!defined('CL1K3B1T35')){
 /**
  * Editar a imagem do perfil do usuario no banco de dados
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsEditProfileImage
 {
@@ -78,7 +78,7 @@ class AdmsEditProfileImage
             $this->result = true;
             return true;
         } else {
-            $_SESSION['msg'] = "<p style='color: #f00'>Erro: Perfil não encontrado!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Perfil não encontrado!</p>";
             $this->result = false;
             return false;
         }
@@ -98,7 +98,7 @@ class AdmsEditProfileImage
                 //$this->result = false;
                 $this->valInput();
             } else {
-                $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Necessário selecionar uma imagem!</p>";
+                $_SESSION['msg'] = "<p class='alert-danger'>Erro: Necessário selecionar uma imagem!</p>";
                 $this->result = false;
             }
         } else {
@@ -183,7 +183,7 @@ class AdmsEditProfileImage
             $_SESSION['user_imagem'] = $this->nameImg;
             $this->deleteImage();
         }else{
-            $_SESSION['msg'] = "<p style='color: #f00;'>Erro: Imagem não editada com sucesso!</p>";
+            $_SESSION['msg'] = "<p class='alert-danger'>Erro: Imagem não editada com sucesso!</p>";
             $this->result = false;
         }
     }
@@ -198,7 +198,7 @@ class AdmsEditProfileImage
         if ($image !== null && file_exists($this->delImg) && is_file($this->delImg)) {
             unlink($this->delImg);
         } 
-        $_SESSION['msg'] = "<p style='color: green;'>Imagem editada com sucesso!</p>";
+        $_SESSION['msg'] = "<p class='alert-success'>Imagem editada com sucesso!</p>";
         $this->result = true;
     }
 }

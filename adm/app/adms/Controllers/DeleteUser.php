@@ -9,6 +9,8 @@ if(!defined('CL1K3B1T35')){
 
 /**
  * Controller para apagar usuário
+ * 
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class DeleteUser
 {

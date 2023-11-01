@@ -10,7 +10,7 @@ if(!defined('CL1K3B1T35')){
 /**
  * Classe genérica para validar a senha
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsValPassword
 {

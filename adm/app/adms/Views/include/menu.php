@@ -20,13 +20,13 @@ if(isset($this->data['sidebarActive'])){
 
         <a href="<?php echo URLADM; ?>list-users/index" class="sidebar-nav <?php if($sidebar_active == "list-users") { echo "active";}?>"><i class="icon fa-solid fa-users"></i><span>Usuários</span></a>
 
-        <a href="#" class="sidebar-nav <?php if($sidebar_active == "#") { echo "active";}?>"><i class="icon fa-solid fa-user-check"></i><span>Situações do Usuário</span></a>
+        <!--<a href="<?php echo URLADM; ?>list-sits-users/index" class="sidebar-nav <?php if($sidebar_active == "list-sits-users") { echo "active";}?>"><i class="icon fa-solid fa-user-check"></i><span>Situações do Usuário</span></a>-->
 
-        <a href="#" class="sidebar-nav <?php if($sidebar_active == "#") { echo "active";}?>"><i class="icon fa-solid fa-palette"></i><span>Cores</span></a>
+        <!--<a href="#" class="sidebar-nav <?php if($sidebar_active == "#") { echo "active";}?>"><i class="icon fa-solid fa-palette"></i><span>Cores</span></a>-->
 
-        <a href="#" class="sidebar-nav <?php if($sidebar_active == "#") { echo "active";}?>"><i class="icon fa-solid fa-envelope"></i><span>Configurações de E-mail</span></a>
+        <!--<a href="<?php echo URLADM; ?>list-sits-users/index" class="sidebar-nav <?php if($sidebar_active == "list-sits-users") { echo "active";}?>"><i class="icon fa-solid fa-envelope "></i><span>Configurações de E-mail</span></a>-->
 
-        <a href="#" class="sidebar-nav <?php if($sidebar_active == "#") { echo "active";}?>"><i class="icon fa-solid fa-file-lines"></i><span>Relatórios</span></a>
+        <!--<a href="#" class="sidebar-nav <?php if($sidebar_active == "#") { echo "active";}?>"><i class="icon fa-solid fa-file-lines"></i><span>Relatórios</span></a>-->
     </div>
     <!-- Fim da Sidebar -->
 

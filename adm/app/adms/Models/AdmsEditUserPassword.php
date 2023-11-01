@@ -10,7 +10,7 @@ if(!defined('CL1K3B1T35')){
 /**
  * Editar a senha do usuário no banco de dados
  *
- * @author 
+ * @author Marcos <marcosvalenga360@gmail.com> 
  */
 class AdmsEditUserPassword
 {

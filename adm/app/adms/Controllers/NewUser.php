@@ -9,7 +9,7 @@ if(!defined('CL1K3B1T35')){
 
 /**
  * Controller da página novo usuário
- * @author Cesar <cesar@celke.com.br>
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class NewUser
 {

@@ -12,7 +12,7 @@ if(!defined('CL1K3B1T35')){
 /**
  * Classe gernérica para paginar os registros do banco de dados
  *
- * @author Celke
+ * @author Marcos <marcosvalenga360@gmail.com>
  */
 class AdmsPagination
 {
@@ -21,10 +21,10 @@ class AdmsPagination
     private int $offset;
     private string $query;
     private string|null $parseString;
-    private array $resultBd;
-    private string|null $result;
+    private array $resultBd = [];
+    private string|null $result = null;
     private int $totalPages;
-    private int $maxLinks = 2;
+    private int $maxLinks = 6;
     private string $link;
     private string|null $var;
 
@@ -32,7 +32,7 @@ class AdmsPagination
         return $this->offset;
     }
 
-    function getResult():string|null{
+    function getResult(): string|null{
         return $this->result;
     }
 
@@ -41,6 +41,7 @@ class AdmsPagination
         $this->link = $link;
         $this->var = $var;
     }
+    
 
     public function condition(int $page, int $limitResult): void
     {
@@ -49,15 +50,16 @@ class AdmsPagination
         $this->offset = (int)($this->page * $this->limitResult) - $this->limitResult;
     }
 
-    public function pagination(string $query, string|null $parseString): void
+    public function pagination(string $query, string|null $parseString = null): void
     {
         $this->query = (string) $query;
         $this->parseString = (string) $parseString;
-        //var_dump($this->query);
-
         $count = new \App\adms\Models\helper\AdmsRead();
         $count->fullRead($this->query, $this->parseString);
-        $this->resultBd = $count->getResult();
+        $resultFromCount = $count->getResult();
+        if ($resultFromCount !== null) {
+            $this->resultBd = $resultFromCount;
+        }
         $this->pageInstruction();
     }
 
@@ -68,13 +70,12 @@ class AdmsPagination
             $this->totalPages = ceil($totalRecords / $this->limitResult);
             if($this->totalPages >= $this->page){
                 $this->layoutPagination();
-            }else{
+            } else {
                 header("Location: {$this->link}");
             }
-        } else {
-            $this->totalPages = 1;
         }
     }
+    
     private function layoutPagination():void
     {
         $this->result = "<div class='content-pagination'>";
