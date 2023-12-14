@@ -1,2 +1,2 @@
 # AdmClickBite
- Sistema adminitrativo da ClickBites
+ Sistema da ClickBites
